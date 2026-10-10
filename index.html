@@ -62,9 +62,15 @@ document.getElementById("player").innerHTML=
 '<iframe src="https://www.youtube.com/embed/'+song.id+
 '" title="Alabanza cristiana" allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
 }
-function showSongs(genre){
-const catalog=document.getElementById("catalog");
-catalog.innerHTML="";
+
+const cover=document.createElement("img");
+cover.src="https://img.youtube.com/vi/"+song.id+"/hqdefault.jpg";
+cover.alt=song.title;
+cover.style.width="100%";
+cover.style.aspectRatio="16/9";
+cover.style.objectFit="cover";
+cover.style.borderRadius="8px";
+cover.style.marginBottom="8px";
 songs.filter(s=>genre==="Todos"||s.genre===genre).forEach(song=>{
 const card=document.createElement("div");
 card.className="card";
