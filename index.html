@@ -94,7 +94,36 @@ card.append(cover,category,title,button);
 catalog.appendChild(card);
 });
 }
-showSongs("Todos");
+
+function searchSongs(){
+  const query=document.getElementById("searchSong").value
+    .toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+  const catalog=document.getElementById("catalog");
+  catalog.innerHTML="";
+  songs.filter(song=>
+    song.title.toLowerCase().normalize("NFD")
+      .replace(/[\u0300-\u036f]/g,"").includes(query)
+  ).forEach(song=>{
+    const card=document.createElement("div");
+    card.className="card";
+    const cover=document.createElement("img");
+    cover.src="https://img.youtube.com/vi/"+song.id+"/hqdefault.jpg";
+    cover.alt=song.title;
+    cover.style.width="100%";
+    cover.style.aspectRatio="16/9";
+    cover.style.objectFit="cover";
+    cover.style.borderRadius="8px";
+    const category=document.createElement("p");
+    category.textContent=song.genre;
+    const title=document.createElement("h3");
+    title.textContent=song.title;
+    const button=document.createElement("button");
+    button.textContent="▶ Reproducir";
+    button.onclick=()=>playSong(song);
+    card.append(cover,category,title,button);
+    catalog.appendChild(card);
+  });
+}
 </script>
 </body>
 </html>
