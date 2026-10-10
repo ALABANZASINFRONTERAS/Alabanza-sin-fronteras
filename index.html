@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alabanza Sin Fronteras</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: #090909;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+header {
+  text-align: center;
+  padding: 35px 15px;
+  background: linear-gradient(135deg, #17130a, #000);
+  border-bottom: 1px solid #c9a449;
+}
+.logo { font-size: 42px; }
+h1 { color: #d9b45b; font-size: 25px; }
+header p { color: #ccc; }
+main { max-width: 700px; margin: auto; padding: 20px; }
+h2 { color: #d9b45b; }
+.video {
+  background: #171717;
+  padding: 16px;
+  border: 1px solid #443719;
+  border-radius: 12px;
+}
+input {
+  width: 100%;
+  padding: 13px;
+  margin: 8px 0;
+  border-radius: 7px;
+  border: 1px solid #d9b45b;
+  background: #222;
+  color: white;
+}
+button {
+  width: 100%;
+  padding: 13px;
+  border: 0;
+  border-radius: 7px;
+  background: #d9b45b;
+  color: #090909;
+  font-weight: bold;
+  margin-top: 8px;
+}
+iframe { width: 100%; aspect-ratio: 16/9; border: 0; }
+footer { text-align: center; color: #aaa; padding: 25px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">✝️ 🎵</div>
+  <h1>ALABANZA SIN FRONTERAS</h1>
+  <p>La música que glorifica a Dios, sin límites.</p>
+</header>
+<main>
+  <h2>🎶 Nuestra música cristiana</h2>
+  <p>Alabanzas para fortalecer tu fe y acercarte a Dios.</p>
+  <section class="video">
+    <h3>▶️ Escucha nuestras alabanzas</h3>
+    <p>Agrega el enlace de uno de tus videos de YouTube.</p>
+    <input id="youtube" placeholder="Pega aquí el enlace de YouTube">
+    <button onclick="playVideo()">REPRODUCIR ALABANZA</button>
+    <div id="player"></div>
+  </section>
+  <h2>🙏 Nuestra misión</h2>
+  <p>Llevar el mensaje de Jesucristo a cada corazón a través de la música cristiana.</p>
+</main>
+<footer>© Alabanza Sin Fronteras · Música para la gloria de Dios ✝️</footer>
+<script>
+function playVideo() {
+  const url = document.getElementById('youtube').value.trim();
+  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([a-zA-Z0-9_-]{11})/);
+  if (!match) {
+    alert('Por favor, pega un enlace válido de YouTube.');
+    return;
+  }
+  document.getElementById('player').innerHTML =
+    '<iframe src="https://www.youtube.com/embed/' + match[1] +
+    '" title="Alabanza cristiana" allowfullscreen></iframe>';
+}
+</script>
+</body>
+</html>
