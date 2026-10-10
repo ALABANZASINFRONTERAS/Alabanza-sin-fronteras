@@ -14,9 +14,11 @@ h1{font-size:25px}
 main{max-width:850px;margin:auto;padding:18px}
 .filters{text-align:center;margin:18px 0}
 button{background:#d9b45b;color:#090909;border:0;border-radius:7px;padding:12px;margin:4px;font-weight:bold;cursor:pointer}
+#searchSong{width:100%;padding:14px;border-radius:8px;border:1px solid #d9b45b;background:#191919;color:white;font-size:16px}
 #catalog{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px}
 .card{background:#191919;border:1px solid #6c5725;border-radius:10px;padding:14px;text-align:center}
 .card p{color:#d9b45b}
+.card img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px}
 .card button{width:100%}
 #player{margin-top:18px}
 iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:10px}
@@ -31,28 +33,30 @@ footer{text-align:center;color:#d9b45b;padding:25px}
 </header>
 <main>
 <h2>🎶 Catálogo musical cristiano</h2>
-<p>Elige tu alabanza y disfruta de la música para la gloria de Dios.</p>
+<p>Encuentra tus alabanzas favoritas.</p>
+
 <div class="filters">
+<button onclick="showSongs('Todos')">Todas</button>
 <button onclick="showSongs('Corrido tumbado')">Corridos tumbados</button>
 <button onclick="showSongs('Balada')">Baladas</button>
 <button onclick="showSongs('Reggae')">Reggae cristiano</button>
 </div>
-<div style="margin:18px 0">
-  <input
-    id="searchSong"
-    type="search"
-    placeholder="🔎 Buscar una alabanza..."
-    oninput="searchSongs()"
-    style="width:100%;padding:14px;border-radius:8px;border:1px solid #d9b45b;background:#191919;color:white;font-size:16px"
-  >
-</div>
+
+<input id="searchSong" type="search"
+placeholder="🔎 Buscar una alabanza..."
+oninput="searchSongs()">
+
+<div id="catalog"></div>
+
 <h2>▶️ Reproductor</h2>
 <p id="now">Selecciona una canción del catálogo.</p>
 <div id="player"></div>
+
 <h2>🙏 Nuestra misión</h2>
 <p>Llevar el mensaje de Jesucristo a cada corazón a través de la música cristiana.</p>
 </main>
 <footer>© Alabanza Sin Fronteras · Música para la gloria de Dios ✝️</footer>
+
 <script>
 const songs=[
 {title:"Salmos 91 — Bajo la sombra del Omnipotente",genre:"Corrido tumbado",id:"PabE89IcTP8"},
@@ -64,25 +68,23 @@ const songs=[
 {title:"Rosas y espinas",genre:"Reggae",id:"HVS6dWgfTFE"},
 {title:"Efesios 5:14",genre:"Balada",id:"ABpRAanjPhE"}
 ];
+
 function playSong(song){
 document.getElementById("now").textContent="Alabanza seleccionada: "+song.title;
 document.getElementById("player").innerHTML=
 '<iframe src="https://www.youtube.com/embed/'+song.id+
 '" title="Alabanza cristiana" allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
 }
+
+function renderSongs(list){
+const catalog=document.getElementById("catalog");
+catalog.innerHTML="";
+list.forEach(song=>{
+const card=document.createElement("div");
+card.className="card";
 const cover=document.createElement("img");
 cover.src="https://img.youtube.com/vi/"+song.id+"/hqdefault.jpg";
 cover.alt=song.title;
-cover.style.width="100%";
-cover.style.aspectRatio="16/9";
-cover.style.objectFit="cover";
-cover.style.borderRadius="8px";
-cover.style.marginBottom="8px";
-songs.filter(s=>genre==="Todos"||s.genre===genre).forEach(song=>{
-const card=document.createElement("div");
-card.className="card";
-const icon=document.createElement("div");
-icon.textContent="🎵";
 const category=document.createElement("p");
 category.textContent=song.genre;
 const title=document.createElement("h3");
@@ -95,36 +97,24 @@ catalog.appendChild(card);
 });
 }
 
+function showSongs(genre){
+document.getElementById("searchSong").value="";
+const list=genre==="Todos"?songs:songs.filter(song=>song.genre===genre);
+renderSongs(list);
+}
+
 function searchSongs(){
-  const query=document.getElementById("searchSong").value
-    .toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
-  const catalog=document.getElementById("catalog");
-  catalog.innerHTML="";
-  songs.filter(song=>
-    song.title.toLowerCase().normalize("NFD")
-      .replace(/[\u0300-\u036f]/g,"").includes(query)
-  ).forEach(song=>{
-    const card=document.createElement("div");
-    card.className="card";
-    const cover=document.createElement("img");
-    cover.src="https://img.youtube.com/vi/"+song.id+"/hqdefault.jpg";
-    cover.alt=song.title;
-    cover.style.width="100%";
-    cover.style.aspectRatio="16/9";
-    cover.style.objectFit="cover";
-    cover.style.borderRadius="8px";
-    const category=document.createElement("p");
-    category.textContent=song.genre;
-    const title=document.createElement("h3");
-    title.textContent=song.title;
-    const button=document.createElement("button");
-    button.textContent="▶ Reproducir";
-    button.onclick=()=>playSong(song);
-    card.append(cover,category,title,button);
-    catalog.appendChild(card);
-  });
+const query=document.getElementById("searchSong").value
+.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+const list=songs.filter(song=>
+(song.title+" "+song.genre).toLowerCase()
+.normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+.includes(query)
+);
+renderSongs(list);
+}
+
 showSongs("Todos");
 </script>
 </body>
 </html>
-
