@@ -99,7 +99,4 @@ function filterSongs(genre,button){
   ).join("");
 }
 
-filterSongs("Todos",document.querySelector(".filters button"));
-</script>
-</body>
-</html>
+filterSongs("Todos",document.querySelector(".
