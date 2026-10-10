@@ -37,7 +37,17 @@ footer{text-align:center;color:#d9b45b;padding:25px}
 <button onclick="showSongs('Balada')">Baladas</button>
 <button onclick="showSongs('Reggae')">Reggae cristiano</button>
 </div>
-<div id="catalog"></div>
+
+<div style="margin:18px 0">
+  <input
+    id="searchSong"
+    type="search"
+    placeholder="🔎 Buscar una alabanza..."
+    oninput="searchSongs()"
+    style="width:100%;padding:14px;border-radius:8px;border:1px solid #d9b45b;background:#191919;color:white;font-size:16px"
+  >
+</div>
+
 <h2>▶️ Reproductor</h2>
 <p id="now">Selecciona una canción del catálogo.</p>
 <div id="player"></div>
