@@ -3,88 +3,85 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Alabanza Sin Fronteras</title>
 <style>
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  background: #090909;
-  color: white;
-  font-family: Arial, sans-serif;
-}
-header {
-  text-align: center;
-  padding: 35px 15px;
-  background: linear-gradient(135deg, #17130a, #000);
-  border-bottom: 1px solid #c9a449;
-}
-.logo { font-size: 42px; }
-h1 { color: #d9b45b; font-size: 25px; }
-header p { color: #ccc; }
-main { max-width: 700px; margin: auto; padding: 20px; }
-h2 { color: #d9b45b; }
-.video {
-  background: #171717;
-  padding: 16px;
-  border: 1px solid #443719;
-  border-radius: 12px;
-}
-input {
-  width: 100%;
-  padding: 13px;
-  margin: 8px 0;
-  border-radius: 7px;
-  border: 1px solid #d9b45b;
-  background: #222;
-  color: white;
-}
-button {
-  width: 100%;
-  padding: 13px;
-  border: 0;
-  border-radius: 7px;
-  background: #d9b45b;
-  color: #090909;
-  font-weight: bold;
-  margin-top: 8px;
-}
-iframe { width: 100%; aspect-ratio: 16/9; border: 0; }
-footer { text-align: center; color: #aaa; padding: 25px; }
+*{box-sizing:border-box}
+body{margin:0;background:#090909;color:white;font-family:Arial,sans-serif}
+header{text-align:center;padding:30px 12px;background:#17130a;border-bottom:2px solid #d9b45b}
+h1,h2{color:#d9b45b}
+h1{font-size:25px}
+main{max-width:850px;margin:auto;padding:18px}
+.filters{text-align:center;margin:18px 0}
+button{background:#d9b45b;color:#090909;border:0;border-radius:7px;padding:12px;margin:4px;font-weight:bold;cursor:pointer}
+#catalog{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px}
+.card{background:#191919;border:1px solid #6c5725;border-radius:10px;padding:14px;text-align:center}
+.card p{color:#d9b45b}
+.card button{width:100%}
+#player{margin-top:18px}
+iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:10px}
+footer{text-align:center;color:#d9b45b;padding:25px}
 </style>
 </head>
 <body>
 <header>
-  <div class="logo">✝️ 🎵</div>
-  <h1>ALABANZA SIN FRONTERAS</h1>
-  <p>La música que glorifica a Dios, sin límites.</p>
+<div style="font-size:40px">✝️ 🎵</div>
+<h1>ALABANZA SIN FRONTERAS</h1>
+<p>La música que glorifica a Dios, sin límites.</p>
 </header>
 <main>
-  <h2>🎶 Nuestra música cristiana</h2>
-  <p>Alabanzas para fortalecer tu fe y acercarte a Dios.</p>
-  <section class="video">
-    <h3>▶️ Escucha nuestras alabanzas</h3>
-    <p>Agrega el enlace de uno de tus videos de YouTube.</p>
-    <input id="youtube" placeholder="Pega aquí el enlace de YouTube">
-    <button onclick="playVideo()">REPRODUCIR ALABANZA</button>
-    <div id="player"></div>
-  </section>
-  <h2>🙏 Nuestra misión</h2>
-  <p>Llevar el mensaje de Jesucristo a cada corazón a través de la música cristiana.</p>
+<h2>🎶 Catálogo musical cristiano</h2>
+<p>Elige tu alabanza y disfruta de la música para la gloria de Dios.</p>
+<div class="filters">
+<button onclick="showSongs('Todos')">Todas</button>
+<button onclick="showSongs('Balada')">Baladas</button>
+<button onclick="showSongs('Reggae')">Reggae cristiano</button>
+</div>
+<div id="catalog"></div>
+<h2>▶️ Reproductor</h2>
+<p id="now">Selecciona una canción del catálogo.</p>
+<div id="player"></div>
+<h2>🙏 Nuestra misión</h2>
+<p>Llevar el mensaje de Jesucristo a cada corazón a través de la música cristiana.</p>
 </main>
 <footer>© Alabanza Sin Fronteras · Música para la gloria de Dios ✝️</footer>
 <script>
-function playVideo() {
-  const url = document.getElementById('youtube').value.trim();
-  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([a-zA-Z0-9_-]{11})/);
-  if (!match) {
-    alert('Por favor, pega un enlace válido de YouTube.');
-    return;
-  }
-  document.getElementById('player').innerHTML =
-    '<iframe src="https://www.youtube.com/embed/' + match[1] +
-    '" title="Alabanza cristiana" allowfullscreen></iframe>';
+const songs=[
+{title:"Balada cristiana 1",genre:"Balada",id:"mQupxw2fpXA"},
+{title:"Reggae cristiano 1",genre:"Reggae",id:"Lp-k9--sQhY"},
+{title:"Reggae cristiano 2",genre:"Reggae",id:"k06o3QhEyxQ"},
+{title:"Reggae cristiano 3",genre:"Reggae",id:"t2ldRak7uZs"},
+{title:"Balada cristiana 2",genre:"Balada",id:"keClpljVWGo"},
+{title:"Reggae cristiano 4",genre:"Reggae",id:"HVS6dWgfTFE"},
+{title:"Balada cristiana 3",genre:"Balada",id:"ABpRAanjPhE"}
+];
+function playSong(song){
+document.getElementById("now").textContent="Alabanza seleccionada: "+song.title;
+document.getElementById("player").innerHTML=
+'<iframe src="https://www.youtube.com/embed/'+song.id+
+'" title="Alabanza cristiana" allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
 }
+function showSongs(genre){
+const catalog=document.getElementById("catalog");
+catalog.innerHTML="";
+songs.filter(s=>genre==="Todos"||s.genre===genre).forEach(song=>{
+const card=document.createElement("div");
+card.className="card";
+const icon=document.createElement("div");
+icon.textContent="🎵";
+const category=document.createElement("p");
+category.textContent=song.genre;
+const title=document.createElement("h3");
+title.textContent=song.title;
+const button=document.createElement("button");
+button.textContent="▶ Reproducir";
+button.onclick=()=>playSong(song);
+card.append(icon,category,title,button);
+catalog.appendChild(card);
+});
+}
+showSongs("Todos");
 </script>
 </body>
 </html>
+
